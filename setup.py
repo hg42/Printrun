@@ -25,7 +25,11 @@ try:
     from Cython.Build import cythonize
     extensions = cythonize("printrun/gcoder_line.pyx")
     from Cython.Distutils import build_ext
-except ImportError:
+except ImportError, e:
+    print "WARNING: Failed to cythonize: %s" % e
+    # Debug helper: uncomment these:
+    # import traceback
+    # traceback.print_exc()
     extensions = None
     build_ext = None
 
