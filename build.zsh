@@ -4,5 +4,7 @@ set -x
 
 export PYTHONPATH=$(pwd)
 
-#trace-open python2 pronterface.py
-python2 pronterface.py
+python setup.py build_ext --inplace
+
+#trace-open venv/bin/python3 pronterface.py
+venv/bin/python3 pronterface.py
