@@ -124,7 +124,7 @@ class printcore():
     def addEventHandler(self, handler):
         '''
         Adds an event handler.
-        
+
         @param handler: The handler to be added.
         '''
         self.event_handler.append(handler)
@@ -327,7 +327,7 @@ class printcore():
                     if empty_lines == 15: break
                 else: empty_lines = 0
                 if line.startswith(tuple(self.greetings)) \
-                   or line.startswith('ok') or "T:" in line:
+                   or line.startswith('ok') or "T0:" in line or "T:" in line:
                     self.online = True
                     for handler in self.event_handler:
                         try: handler.on_online()
@@ -351,11 +351,11 @@ class printcore():
                 continue
             if line.startswith(tuple(self.greetings)) or line.startswith('ok'):
                 self.clear = True
-            if line.startswith('ok') and "T:" in line:
+            if line.startswith('ok') and ("T0:" in line or "T:" in line):
                 for handler in self.event_handler:
                     try: handler.on_temp(line)
                     except: logging.error(traceback.format_exc())
-            if line.startswith('ok') and "T:" in line and self.tempcb:
+            if line.startswith('ok') and ("T0:" in line or "T:" in line) and self.tempcb:
                 # callback for temp, status, whatever
                 try: self.tempcb(line)
                 except: self.logError(traceback.format_exc())

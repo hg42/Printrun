@@ -59,7 +59,7 @@ try:
 except:
     READLINE = False  # neither readline module is available
 
-tempreading_exp = re.compile("(^T:| T:)")
+tempreading_exp = re.compile("(^T0:|T:| T0:| T:)")
 
 REPORT_NONE = 0
 REPORT_POS = 1
@@ -1269,7 +1269,7 @@ class pronsole(cmd.Cmd):
             if self.userm114 > 0:
                 self.userm114 -= 1
                 isreport |= REPORT_MANUAL
-        if "ok T:" in l or tempreading_exp.findall(l):
+        if "ok T0:" in l or "ok T:" in l or tempreading_exp.findall(l):
             self.tempreadings = l
             isreport = REPORT_TEMP
             if self.userm105 > 0:
@@ -1382,8 +1382,8 @@ class pronsole(cmd.Cmd):
             self.log("Bed temperature presets updated, pla:%s, abs:%s" % (self.bedtemps["pla"], self.bedtemps["abs"]))
 
     def tempcb(self, l):
-        if "T:" in l:
-            self.log(l.strip().replace("T", "Hotend").replace("B", "Bed").replace("ok ", ""))
+        if "T0" in l or "T" in l:
+            self.log(l.strip().replace("T0", "Hotend").replace("T", "Hotend").replace("B", "Bed").replace("ok ", ""))
 
     def do_gettemp(self, l):
         if "dynamic" in l:

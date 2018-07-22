@@ -86,7 +86,11 @@ def gettemp(p):
     except: setattr(p, 'temp', 0)
     for n in range(p.logl, len(p.log)):
         line = p.log[n]
-        if 'T:' in line:
+        if 'T0:' in line:
+            try:
+                setattr(p, 'temp', int(line.split('T0:')[1].split()[0]))
+            except: print line
+        elif 'T:' in line:
             try:
                 setattr(p, 'temp', int(line.split('T:')[1].split()[0]))
             except: print(line)
